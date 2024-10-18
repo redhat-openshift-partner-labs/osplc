@@ -1,0 +1,1 @@
+module github.com/redhat-openshfit-partner-labs/osplc
