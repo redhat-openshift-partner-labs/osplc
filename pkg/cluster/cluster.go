@@ -129,7 +129,6 @@ func StartCluster(dynamicClient dynamic.Interface, name string) error {
 	// Get the ClusterDeployment object
 	cd, err := dynamicClient.Resource(ClusterDeploymentGVR).Namespace(name).Get(context.TODO(), name, metav1.GetOptions{})
 	//cd, err := dynamicClient.Resource(clusterDeploymentGVR).Get(context.TODO(), name, metav1.GetOptions{})
-	log.Printf("%+v", cd)
 	if err != nil {
 		return fmt.Errorf("failed to get ClusterDeployment %s: %v", name, err)
 	}
