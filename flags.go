@@ -1,13 +1,13 @@
-package utils
+package main
 
 import "github.com/urfave/cli/v2"
 
-var Flags = []cli.Flag{
+var _flags = []cli.Flag{
 	&cli.StringFlag{
 		Name:  "cluster",
-		Usage: "Set the cluster name to update or get the status of",
+		Usage: "Name of the cluster",
 	},
-	&cli.IntFlag{
+	&cli.StringFlag{
 		Name:  "uptime",
 		Usage: "Set/get the uptime for the cluster",
 	},

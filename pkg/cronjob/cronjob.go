@@ -27,12 +27,12 @@ func CreateCronJob(clientset *kubernetes.Clientset, name, timezone string) error
 					Template: corev1.PodTemplateSpec{
 						Spec: corev1.PodSpec{
 							RestartPolicy:      "Never",
-							ServiceAccountName: "openshift-partner-labs-timezone-handler",
+							ServiceAccountName: "openshift-partner-labs-osplc",
 							Containers: []corev1.Container{
 								{
 									Name:    "handler",
-									Image:   "quay.io/rhopl/rhopl:v0.0.1",
-									Command: []string{"/app/rhopl", "start", "--cluster", name},
+									Image:   "quay.io/rhopl/osplc:v0.0.1",
+									Command: []string{"/app/osplc", "start", "--cluster", name},
 								},
 							},
 						},
@@ -52,5 +52,19 @@ func CreateCronJob(clientset *kubernetes.Clientset, name, timezone string) error
 	}
 
 	fmt.Printf("CronJob %s created successfully\n", name)
+	return nil
+}
+
+func DeleteCronJob(clientset *kubernetes.Clientset, namespace string, name string) error {
+	err := clientset.BatchV1().CronJobs(namespace).Delete(context.TODO(), name, metav1.DeleteOptions{})
+	if err != nil {
+		if apierrors.IsNotFound(err) {
+			fmt.Printf("CronJob %s not found\n", name)
+			return nil
+		}
+		return err
+	}
+
+	fmt.Printf("CronJob %s deleted successfully\n", name)
 	return nil
 }
