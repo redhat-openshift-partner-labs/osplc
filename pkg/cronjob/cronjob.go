@@ -32,7 +32,7 @@ func CreateCronJob(clientset *kubernetes.Clientset, name, timezone string) error
 								{
 									Name:    "handler",
 									Image:   "quay.io/rhopl/osplc:v0.0.1",
-									Command: []string{"/app/osplc", "start", "--cluster", name},
+									Command: []string{"/app/osplc", "start", "cluster", "--cluster", name},
 								},
 							},
 						},
