@@ -20,7 +20,7 @@ func CreateCronJob(clientset *kubernetes.Clientset, name, timezone string) error
 		Spec: batchv1.CronJobSpec{
 			Schedule:          "00 08 * * 1-5",
 			TimeZone:          &timezone,
-			ConcurrencyPolicy: batchv1.ReplaceConcurrent,
+			ConcurrencyPolicy: batchv1.ForbidConcurrent,
 			JobTemplate: batchv1.JobTemplateSpec{
 				Spec: batchv1.JobSpec{
 					BackoffLimit: ptr.Int32(0),
