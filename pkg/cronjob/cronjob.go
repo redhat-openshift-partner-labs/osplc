@@ -12,6 +12,8 @@ import (
 	ptr "k8s.io/utils/pointer"
 )
 
+// TODO Add rosa support
+
 func CreateCronJob(clientset *kubernetes.Clientset, name, timezone string) error {
 	cronJob := &batchv1.CronJob{
 		ObjectMeta: metav1.ObjectMeta{
@@ -31,7 +33,7 @@ func CreateCronJob(clientset *kubernetes.Clientset, name, timezone string) error
 							Containers: []corev1.Container{
 								{
 									Name:    "handler",
-									Image:   "quay.io/rhopl/osplc:v0.0.1",
+									Image:   "quay.io/rhopl/osplc:v0.0.2",
 									Command: []string{"/app/osplc", "start", "cluster", "--cluster", name},
 								},
 							},

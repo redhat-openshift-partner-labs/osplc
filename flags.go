@@ -2,7 +2,7 @@ package main
 
 import "github.com/urfave/cli/v2"
 
-var _flags = []cli.Flag{
+var Flags = []cli.Flag{
 	&cli.StringFlag{
 		Name:  "cluster",
 		Usage: "Name of the cluster",

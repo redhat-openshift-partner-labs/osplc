@@ -11,8 +11,8 @@ func main() {
 	app := &cli.App{
 		Name:     "osplc",
 		Usage:    "Manages ClusterDeployment and CronJob resources",
-		Flags:    _flags,
-		Commands: _commands,
+		Flags:    Flags,
+		Commands: Commands,
 	}
 
 	if err := app.Run(os.Args); err != nil {

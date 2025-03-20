@@ -8,7 +8,31 @@ import (
 	"log"
 )
 
-var _commands = []*cli.Command{
+var Commands = []*cli.Command{
+	{
+		Name:  "rosa",
+		Usage: "Interact with ROSA clusters",
+		Subcommands: []*cli.Command{
+			{
+				Name:  "start",
+				Usage: "",
+				Flags: Flags,
+				Action: func(c *cli.Context) error {
+					print("Starting Rosa Cluster\n")
+					return startRosaCluster(c.String("cluster"))
+				},
+			},
+			{
+				Name:  "stop",
+				Usage: "",
+				Flags: Flags,
+				Action: func(c *cli.Context) error {
+					print("Stopping Rosa Cluster\n")
+					return stopRosaCluster(c.String("cluster"))
+				},
+			},
+		},
+	},
 	{
 		Name:  "status",
 		Usage: "Get current status of ClusterDeployments",
@@ -28,7 +52,7 @@ var _commands = []*cli.Command{
 		Subcommands: []*cli.Command{
 			{
 				Name:  "cronjob",
-				Flags: _flags,
+				Flags: Flags,
 				Action: func(c *cli.Context) error {
 					return cronjob.CreateCronJob(KC, c.String("cluster"), c.String("timezone"))
 				},
@@ -64,7 +88,7 @@ var _commands = []*cli.Command{
 			{
 				Name:  "cluster",
 				Usage: "Start a cluster",
-				Flags: _flags,
+				Flags: Flags,
 				Action: func(c *cli.Context) error {
 					return startCluster(c.String("cluster"))
 				},
@@ -77,7 +101,7 @@ var _commands = []*cli.Command{
 			{
 				Name:  "uptime",
 				Usage: "Set the uptime for the cluster; format is like 8h30m default is 8h",
-				Flags: _flags,
+				Flags: Flags,
 				Action: func(c *cli.Context) error {
 					return setUptime(c.String("cluster"), c.String("uptime"))
 				},
@@ -98,7 +122,7 @@ var _commands = []*cli.Command{
 			{
 				Name:  "cluster",
 				Usage: "Get the status of a cluster",
-				Flags: _flags,
+				Flags: Flags,
 				Action: func(c *cli.Context) error {
 					return getStatus("cluster", c.String("cluster"))
 				},
@@ -123,6 +147,14 @@ func setTimezone(timezone string) error {
 func startCluster(name string) error {
 	// Start a cluster using dynamic client
 	return cluster.StartCluster(DC, name)
+}
+
+func startRosaCluster(name string) error {
+	return cluster.StartRosaCluster(name)
+}
+
+func stopRosaCluster(name string) error {
+	return cluster.StopRosaCluster(name)
 }
 
 func statusAll() error {
